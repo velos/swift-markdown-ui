@@ -51,7 +51,7 @@ extension BlockNode {
         }
       }
     case .codeBlock:
-      self = .codeBlock(fenceInfo: unsafeNode.fenceInfo, content: unsafeNode.literal ?? "")
+        self = .codeBlock(fenceInfo: unsafeNode.fenceInfo, content: unsafeNode.literal ?? "", id: unsafeNode.id)
     case .htmlBlock:
       self = .htmlBlock(content: unsafeNode.literal ?? "")
     case .paragraph:
@@ -201,6 +201,10 @@ extension UnsafeNode {
     Int(cmark_node_get_heading_level(self))
   }
 
+  fileprivate var id: String {
+    "\(cmark_node_get_start_line(self))-\(cmark_node_get_start_column(self))"
+  }
+
   fileprivate var tableColumns: Int {
     Int(cmark_gfm_extensions_get_table_columns(self))
   }
@@ -289,7 +293,7 @@ extension UnsafeNode {
       cmark_node_set_list_tight(node, isTight ? 1 : 0)
       items.compactMap(UnsafeNode.make).forEach { cmark_node_append_child(node, $0) }
       return node
-    case .codeBlock(let fenceInfo, let content):
+    case .codeBlock(let fenceInfo, let content, _):
       guard let node = cmark_node_new(CMARK_NODE_CODE_BLOCK) else { return nil }
       if let fenceInfo {
         cmark_node_set_fence_info(node, fenceInfo)

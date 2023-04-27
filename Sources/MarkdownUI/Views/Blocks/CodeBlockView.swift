@@ -6,10 +6,12 @@ struct CodeBlockView: View {
 
   private let fenceInfo: String?
   private let content: String
+  private let id: String
 
-  init(fenceInfo: String?, content: String) {
+  init(fenceInfo: String?, content: String, id: String) {
     self.fenceInfo = fenceInfo
     self.content = content.hasSuffix("\n") ? String(content.dropLast()) : content
+    self.id = id
   }
 
   var body: some View {
@@ -17,6 +19,7 @@ struct CodeBlockView: View {
       configuration: .init(
         language: self.fenceInfo,
         content: self.content,
+        id: self.id,
         label: .init(self.label)
       )
     )
@@ -25,5 +28,6 @@ struct CodeBlockView: View {
   private var label: some View {
     self.codeSyntaxHighlighter.highlightCode(self.content, language: self.fenceInfo)
       .textStyleFont()
+      .id(id)
   }
 }

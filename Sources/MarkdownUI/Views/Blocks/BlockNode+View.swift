@@ -11,8 +11,9 @@ extension BlockNode: View {
       NumberedListView(isTight: isTight, start: start, items: items)
     case .taskList(let isTight, let items):
       TaskListView(isTight: isTight, items: items)
-    case .codeBlock(let fenceInfo, let content):
-      CodeBlockView(fenceInfo: fenceInfo, content: content)
+    case .codeBlock(let fenceInfo, let content, let id):
+      CodeBlockView(fenceInfo: fenceInfo, content: content, id: id)
+        .id(id)
     case .htmlBlock(let content):
       ParagraphView(content: content)
     case .paragraph(let content):

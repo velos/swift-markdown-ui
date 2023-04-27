@@ -27,11 +27,12 @@ import Foundation
 /// ![](CodeBlock)
 public struct CodeBlock: MarkdownContentProtocol {
   public var _markdownContent: MarkdownContent {
-    .init(blocks: [.codeBlock(fenceInfo: self.language, content: self.content)])
+    .init(blocks: [.codeBlock(fenceInfo: self.language, content: self.content, id: id)])
   }
 
   private let language: String?
   private let content: String
+  private let id: String = UUID().uuidString
 
   public init(language: String? = nil, content: String) {
     self.language = language

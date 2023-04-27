@@ -4,7 +4,7 @@ import SwiftUI
 ///
 /// The theme ``Theme/codeBlock`` block style receives a `CodeBlockConfiguration`
 /// input in its `body` closure.
-public struct CodeBlockConfiguration {
+public struct CodeBlockConfiguration: Identifiable {
   /// A type-erased view of a Markdown code block.
   public struct Label: View {
     init<L: View>(_ label: L) {
@@ -19,6 +19,9 @@ public struct CodeBlockConfiguration {
 
   /// The code block contents.
   public let content: String
+
+  /// The block identifier
+  public let id: String
 
   /// The code block view.
   public let label: Label
