@@ -40,7 +40,7 @@ extension Color {
           }
         }
       )
-    #elseif os(watchOS)
+    #elseif os(watchOS) || os(visionOS)
       self = dark()
     #endif
   }
